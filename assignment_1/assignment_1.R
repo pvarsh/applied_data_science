@@ -4,35 +4,31 @@ x = c(6,3,6,8,1,3,8,4,9,1)
 y = c(0,5,3,0,0,6,5,9,3,8)
 
 ### Problem 1
-
-# a.
-plot(x, y)
-# b.
-mean(x)
-mean(y)
-# c.
-var(x)
-var(y)
-# d.
-sd(x)
-sd(y)
-# e.
-cov(x,y)
-# f.
-cor(x,y)
-# g.
-
-
-a = 1:10
-b = a*0.5 + 2
-c = a * 3 - 1
-plot(a,b)
-plot(a,c)
-points(a,b)
-cov(a,b)
-cov(a,c)
-cor(a,b)
-cor(a,c)
+problem1 = function(){
+  cat("PROBLEM 1")
+  # a.
+  plot(x, y, main = "Problem 1.a")
+  # b.
+  cat("\nMean of x is", mean(x))
+  cat("\nMean of y is", mean(y))
+  # c.
+  cat("\nVariance of x is", var(x))
+  cat("\nVariance of y is", var(y))
+  # d.
+  cat("\nStandard deviation of x is", sd(x))
+  cat("\nStandard deviation of y is", sd(y))
+  # e.
+  cat("\nCovariance of x and y is", cov(x,y))
+  # f.
+  cat("\nCorrelation of x and y is", cor(x,y))
+  # g.
+  slope = cov(x,y)/var(x)
+  cat("\nThe slope of the regression line is cov(x,y) / var(x) =", slope)
+  new.x = 13
+  pred.y = mean(y) + slope * (new.x - mean(x))
+  cat("\nFor x =", new.x, "the point estimate for y is y =", pred.y)
+}
+problem1()
 
 ### 2.
 # a. Discrete. The number of rides taken by a resident in a month is a count variable that takes values on the set of natural numbers, which is discrete.
@@ -43,4 +39,5 @@ cor(a,c)
 # f. Continuous. Loudness is continuous.
 # g. Discrete. Coffee can be 'good or bad' or 'very good, good, average, bad, very bad'. One could devise other metrics that would yield a continuous variable.
 
-### 3. 
+
+### 3.
