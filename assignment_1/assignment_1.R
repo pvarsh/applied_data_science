@@ -41,4 +41,6 @@ problem1()
 
 
 ### 3.
-
+#There are several things to consider.
+#1. If we are arguing that Wall St. bankers have higher salaries compared to general population or some other specific professions, then we need to obtain data about salaries, IQs, and education.
+#2. If we are trying to explain variation of salaries among Wall St. bankers, then we can try to do it with the given data by looking at scatter plots of salary vs IQ and salary vs education, we can examine correlations, or we can build a linear model. In doing so we should check that IQ and education are not too highly correlated, because high correlation would give unstable estimates. We can do the correlation check manually, or do model comparison using adjusted R^2 or anova.
