@@ -80,3 +80,13 @@ plot(nasdaq.log.return, netflix.log.return)
 abline(mod1, col = 'red', lwd = 2)
 
 # PROBLEM 4
+# a.
+library(foreign)
+train = read.dta('train.dta')
+# b. 
+summary(train)
+apply(train, 2, sd)
+# c.
+mod4 = lm(d~x1, data = train)
+summary(mod4)
+predict(mod4, newdata = data.frame(x1 = c(.65, .99)))
