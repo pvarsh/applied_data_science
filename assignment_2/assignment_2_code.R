@@ -69,8 +69,20 @@ hist(netflix.log.return)
 # c.
 plot(netflix.log.return, type = 'l', ylab = 'log return', xlab = "# days since September 20, 2004", col = "orange2")
 lines(nasdaq.log.return, type = 'l', xlab = "# days since September 20, 2004", col = "cyan2")
-legend('topright', col = c('orange2', 'cyan2'), lty = c(1,1),legend = c("netflix", "nasdaq 100 composite"))
+legend('topright', col = c('orange2', 'cyan2'), lty = c(1,1),legend = c("netflix", "NASDAQ 100 composite"))
 
+# d.
+mod1 = lm(netflix.log.return ~ nasdaq.log.return)
+summary(mod1)
+confint(mod1, level = .95)
 
+plot(nasdaq.log.return, netflix.log.return)
+abline(mod1)
 
-
+# 
+# netflix.log.return.1 = netflix.log.return + rnorm(length(netflix.log.return), 0, 0.5)
+# plot(netflix.log.return, type = 'l', col = 'orange2')
+# lines(netflix.log.return.1, col = 'blue2')
+# summary(lm(netflix.log.return.1 ~ netflix.log.return))
+# confint(lm(netflix.log.return.1 ~ netflix.log.return))
+# plot(netflix.log.return, netflix.log.return.1)
