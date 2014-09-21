@@ -90,3 +90,44 @@ apply(train, 2, sd)
 mod4 = lm(d~x1, data = train)
 summary(mod4)
 predict(mod4, newdata = data.frame(x1 = c(.65, .99)))
+
+# PROBLEM 5
+#b.
+set.seed(1234)
+x = rnorm(1000, 0, 1)
+epsilon = rnorm(1000, 0, 1)
+y = 1 + 2*x + epsilon
+plot(x,y)
+#c.
+lm(y~x)
+summary(mod5)
+abline(mod5, col = 'red', lwd = 2)
+#d.
+set.seed(1234)
+coefs = data.frame('intercept' = numeric(), 'coef' = numeric())
+n_model = 1000
+n_mc = 1000
+for (i in 1:n_mc){
+  x = rnorm(n_model, 0, 1)
+  epsilon = rnorm(n_model, 0, 1)
+  y = 1 + 2*x + epsilon
+  mod5 = lm(y~x)
+  sum5 = summary(mod5)
+  coefs[i, 1] = sum5$coefficients[1,1]
+  coefs[i, 2] = sum5$coefficients[2,1]
+  summary(mod5)
+}
+coefs$coef
+hist(coefs$coef, freq = F, ylim = c(0, 20))
+sd_beta = 1/(sqrt(n))
+z = rnorm(1000, mean = 2, sd = sd_beta)
+t = rt(10000, 998, 2)
+plot(density(t), col = 'cyan2')
+lines(density(t), col = 'cyan2')
+lines(density(z), col = 'orange2')
+
+t = rt(10000, 998, 2)
+t = t*sqrt(1000)
+hist(t, freq = F)
+lines(hist(t, plot = F)$density * 998)
+str(hist(t, plot = F))
