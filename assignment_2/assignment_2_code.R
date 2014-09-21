@@ -64,7 +64,7 @@ netflix.log.return = log.return(netflix$Close)
 nasdaq.log.return = log.return(nasdaq$Close)
 
 # b. 
-hist(netflix.log.return)
+hist(netflix.log.return, col = 'orange2', main = "Netflix log-returns")
 
 # c.
 plot(netflix.log.return, type = 'l', ylab = 'log return', xlab = "# days since September 20, 2004", col = "orange2")
@@ -77,12 +77,6 @@ summary(mod1)
 confint(mod1, level = .95)
 
 plot(nasdaq.log.return, netflix.log.return)
-abline(mod1)
+abline(mod1, col = 'red', lwd = 2)
 
-# 
-# netflix.log.return.1 = netflix.log.return + rnorm(length(netflix.log.return), 0, 0.5)
-# plot(netflix.log.return, type = 'l', col = 'orange2')
-# lines(netflix.log.return.1, col = 'blue2')
-# summary(lm(netflix.log.return.1 ~ netflix.log.return))
-# confint(lm(netflix.log.return.1 ~ netflix.log.return))
-# plot(netflix.log.return, netflix.log.return.1)
+# PROBLEM 4
