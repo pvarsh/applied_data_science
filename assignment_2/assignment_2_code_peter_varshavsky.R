@@ -122,5 +122,3 @@ hist(coefs$coef, main = "beta_1", col = 'cyan2')
 
 #f. 
 hist(exp(coefs$coef), main = "exp(beta_1)", col = 'orange2')
-
-
