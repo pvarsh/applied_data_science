@@ -8,7 +8,7 @@ y = sin(x) + rnorm(k, 0, .5)
 df = cbind(x, y)
 plot(x, y, pch = 19, cex = 0.1)
 
-nnet1 = neuralnet(y~x, data = df, hidden = 2)
+nnet1 = neuralnet(y~x, data = df, hidden = c(2,5))
 
 pred.net = prediction(nnet1)
 str(pred.net)

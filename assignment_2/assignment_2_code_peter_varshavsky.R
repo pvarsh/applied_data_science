@@ -117,8 +117,15 @@ for (i in 1:n_mc){
   coefs[i, 2] = sum5$coefficients[2,1]
   summary(mod5)
 }
+
 coefs$coef
-hist(coefs$coef, main = "beta_1", col = 'cyan2')
+hist1 = hist(coefs$coef, main = "beta_1", col = 'cyan2')
 
 #f. 
-hist(exp(coefs$coef), main = "exp(beta_1)", col = 'orange2')
+hist2 = hist(exp(coefs$coef), main = "exp(beta_1)", col = 'orange2')
+
+plot(hist1, xlim = c(1.5, 9), col = 'cyan2')
+plot(hist2, add = T, col = 'orange2')
+
+boxplot(coefs$coef)
+boxplot(exp(coefs$coef))
