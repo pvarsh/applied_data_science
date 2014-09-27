@@ -74,7 +74,7 @@ def scPlots(dfIn):
     plt.axis([xmin, xmax, ymin, ymax])
     plt.show()
 
-def scPlotsFig(dfIn, ncols = 3):
+def scPlotsFig(dfIn, ncols = 3, fileOut = None, outFormat = 'png'):
   # makes scatter plots of all columns against last columns on one figure
   
   # get column names for all but last column
@@ -108,9 +108,13 @@ def scPlotsFig(dfIn, ncols = 3):
   
     plt.axis([xmin, xmax, ymin, ymax])
   plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=.3, hspace=.5)
-  plt.show()
+  
+  if fileOut != None:
+    plt.savefig(fileOut, format = outFormat) 
+  else:
+    plt.show()
 
-scPlotsFig(df[cols1b])
+scPlotsFig(df[cols1b], ncols = 3, fileOut = figurespath + "fig1c.pdf", outFormat = 'pdf')
 
 #scPlots(df[cols1b])
 #fout = "table1b.csv"
