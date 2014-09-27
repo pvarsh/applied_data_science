@@ -86,7 +86,7 @@ def scPlotsFig(dfIn, ncols = 3):
   # set y limits
   ymin, ymax = dfSummary['lw'][[3,-1]]
   ywidth = ymax - ymin
-  ymin, ymax = ymin - 0.05 * ywidth, ymax + 0.05 * ywidth
+  ymin, ymax = ymin - 0.1 * ywidth, ymax + 0.1 * ywidth
   
   fig = plt.figure()
   
@@ -96,15 +96,18 @@ def scPlotsFig(dfIn, ncols = 3):
   for i, col in enumerate(cols1c):
     subPlotPosition = int(str(nrows) + str(ncols) + str(i+1))
     #print subPlotPosition 
-    ax = fig.add_subplot(subPlotPosition)
-    ax.plot(dfIn[col], dfIn['lw'], 'co')
-    ax.plt.xlabel(col)
-    #ax.ylabel('log wage')
-    #xmin, xmax = dfSummary[col][[3, -1]]
-    #xwidth = xmax - xmin
-    #xmin, xmax = xmin - 0.05 * xwidth, xmax + 0.05 * xwidth
-      
-    #ax.plt.axis([xmin, xmax, ymin, ymax])
+    fig.add_subplot(subPlotPosition)
+    plt.plot(dfIn[col], dfIn['lw'], 'co')
+    plt.xlabel(col)
+    if i % ncols == 0:
+      plt.ylabel('log wage')
+    xmin, xmax = dfSummary[col][[3, -1]]
+    xwidth = xmax - xmin
+    xmin, xmax = xmin - 0.1 * xwidth, xmax + 0.1 * xwidth
+    
+  
+    plt.axis([xmin, xmax, ymin, ymax])
+  plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=.3, hspace=.5)
   plt.show()
 
 scPlotsFig(df[cols1b])
