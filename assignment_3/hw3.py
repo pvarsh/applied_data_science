@@ -72,6 +72,42 @@ def scPlots(dfIn):
       
     plt.axis([xmin, xmax, ymin, ymax])
     plt.show()
+
+def scPlotsFig(dfIn):
+  # makes scatter plots of all columns against last columns on one figure
+  print 'aaa'  
+  # get column names for all but last column
+  cols1c = list(dfIn.columns.values)[0:-1]
+  
+  # summary stats for dfIn
+  dfSummary = dfIn.describe()
+
+  # set y limits
+  ymin, ymax = dfSummary['lw'][[3,-1]]
+  ywidth = ymax - ymin
+  ymin, ymax = ymin - 0.05 * ywidth, ymax + 0.05 * ywidth
+  
+  #cols1c = ['rns', 'mrt', 'smsa', 'kww', 'expr']
+  
+  #df1c = df[cols1c].describe()
+  #ymin, ymax = df[cols1b].describe()['lw'][[3,-1]]
+  #ywidth = ymax - ymin
+  #ymin, ymax = ymin - 0.05 * ywidth, ymax + 0.05 * ywidth
+  
+  fig = plt.figure()
+  
+  nplots = len(cols1c)
+
+  for col in cols1c:
+    plt.plot(dfIn[col], dfIn['lw'], 'co')
+    plt.xlabel(col)
+    plt.ylabel('log wage')
+    xmin, xmax = dfSummary[col][[3, -1]]
+    xwidth = xmax - xmin
+    xmin, xmax = xmin - 0.05 * xwidth, xmax + 0.05 * xwidth
+      
+    plt.axis([xmin, xmax, ymin, ymax])
+    plt.show()
 scPlots(df[cols1b])
 #fout = "table1b.csv"
 #with open(fout, 'r') as f:
