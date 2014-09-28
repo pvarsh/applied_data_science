@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from scipy import stats
 from math import ceil
 
 import csv
@@ -74,8 +75,16 @@ def scPlots(dfIn):
     plt.axis([xmin, xmax, ymin, ymax])
     plt.show()
 
-def scPlotsFig(dfIn, ncols = 3, fileOut = None, outFormat = 'png'):
+def scPlotsFig(dfIn, ncols = 3, fileOut = None, outFormat = 'png', linreg = False):
   # makes scatter plots of all columns against last columns on one figure
+  # parameters:
+  #   dfIn:      data frame containing m columns,
+  #              the first m-1 columns will be plotted against mth column
+  #   ncols:     number of columns in figure
+  #   fileOut:   figure output file name with path. default will print to screen
+  #   outFormat: file format to print to. default will print to 'png'
+  #   linreg:    include linear regression lines (True/False)
+  # TODO: parse fileOut to extract format
   
   # get column names for all but last column
   cols1c = list(dfIn.columns.values)[0:-1]
@@ -87,34 +96,47 @@ def scPlotsFig(dfIn, ncols = 3, fileOut = None, outFormat = 'png'):
   ymin, ymax = dfSummary['lw'][[3,-1]]
   ywidth = ymax - ymin
   ymin, ymax = ymin - 0.1 * ywidth, ymax + 0.1 * ywidth
-  
+ 
+  # create figure 
   fig = plt.figure()
   
+  # calculate number of rows and plots per row
   nplots = len(cols1c)
   nrows = int(ceil(float(nplots/ncols)))
 
+  # create plots in fig
   for i, col in enumerate(cols1c):
     subPlotPosition = int(str(nrows) + str(ncols) + str(i+1))
     #print subPlotPosition 
     fig.add_subplot(subPlotPosition)
     plt.plot(dfIn[col], dfIn['lw'], 'co')
+
+    # add x-axis annotation
     plt.xlabel(col)
+   
+    # y-axis label only for first plot in each row
     if i % ncols == 0:
       plt.ylabel('log wage')
     xmin, xmax = dfSummary[col][[3, -1]]
     xwidth = xmax - xmin
     xmin, xmax = xmin - 0.1 * xwidth, xmax + 0.1 * xwidth
-    
-  
     plt.axis([xmin, xmax, ymin, ymax])
+  
+    # add regression line
+    regOut = stats.linregress(dfIn[col], dfIn['lw'])
+    plt.plot([xmin, xmax], [regOut[0]* v + regOut[1] for v in [xmin, xmax]], 'r-')
+
+  # adjust space between plots
   plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=.3, hspace=.5)
   
+  # print to screen or to file
   if fileOut != None:
     plt.savefig(fileOut, format = outFormat) 
   else:
     plt.show()
 
 scPlotsFig(df[cols1b], ncols = 3, fileOut = figurespath + "fig1c.pdf", outFormat = 'pdf')
+
 
 #scPlots(df[cols1b])
 #fout = "table1b.csv"
