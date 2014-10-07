@@ -1,0 +1,2 @@
+### CLEAR
+rm(list = ls())
