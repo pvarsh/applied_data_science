@@ -35,6 +35,26 @@ compareLogTransforms = function(countries, y, x){
   return(trans.df)
 }
 
+compareLogTransforms1 = function(df, xcol, ycol){
+  
+  log.df = df[,c(1, xcol, ycol)]
+  print(head(log.df))
+  exclude = log.df[2] == -Inf | log.df[3] == -Inf | log.df[2] == NaN | log.df[3] == NaN
+  cat("Excluded ", sum(exclude), " rows")
+  
+#   infinities = log.x == -Inf | log.y == -Inf
+#   trans.df = data.frame(x = log.x[!infinities], y = log.y[!infinities])
+#   plot(x, y, main = "y against x")
+#   plot(trans.df$x, trans.df$y, main = "log(y) against log(x)")
+#   linmod = lm(log.y[!infinities] ~ log.x[!infinities])
+#   abline(linmod, col = 'red')
+#   print(cat("\nP-value", summary(linmod)$coefficients[2, 4]), sep = " ")
+#   return(trans.df)
+
+}
+a = compareLogTransforms1(traff.df.outRem1, xcol = 7, ycol = 10)
+
+
 ###### READ DATA
 
 ## file paths
@@ -111,6 +131,7 @@ mod3.1 = lm(total.victims ~ log.gdp +
             data = traff.df.outRem2)
 
 summary(mod3.1)
+
 colnames(traff.df.outRem2)
 plot(traff.df.outRem2)
 
@@ -119,6 +140,8 @@ plot(traff.df.outRem2$log.gdp, col = traff.df.outRem2$country)
 plot(traff.df.outRem2$log.gdp, traff.df.outRem2$year, col = traff.df.outRem2$country)
 
 a = compareLogTransforms(traff.df.outRem1$country, traff.df.outRem1$gdp, traff.df.outRem1$total.victims)
+a = compareLogTransforms1(traff.df.outRem1, xcol = 7, ycol = 10)
+
 
 ###### PREDICTING CHILD VICTIMS
 
