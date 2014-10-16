@@ -1,31 +1,26 @@
 import os
 import glob
 from PIL import Image
-from sys import argv
+
 def changeType(img):
     im = Image.open(img)
     first = img.split(".")[0]
     im.save(first+".png")
 
-def resize(img,height,width):
+def resize(img, path_out = ""):
     im = Image.open(img).convert('LA')
     w,h = im.size
-    newIm = im.resize((height,width))
+    newIm = im.resize((40,40))
     first = img.split(".")[0]
-    newIm.save(first+"copy.png")
+    newIm.save(path_out + first + "copy.png")
 
-def jpegToPng():
-    images = glob.glob("*.jpeg")
-    for image in images:
-        change(image)
-    images = glob.glob("*.jpg")
-    for image in images:
-        changeType(image)
+path_in = "/Users/petervarshavsky/Documents/Git_NYU/applied_data_science/lab-2/images/faces/full_size/"
+path_out = "/Users/petervarshavsky/Documents/Git_NYU/applied_data_science/lab-2/images/faces/resized/"
+images = glob.glob(path_in + "*.jpg")
+for image in images:
+  changeType(image)
 
-def resize(height,width):
-    images = glob.glob("*.png")
-    for image in images:
-        resize(image,height,width)
+images = glob.glob(path_in + "*.png")
 
-height = argv[1]
-width = argv[2]
+for image in images:
+    resize(image)
