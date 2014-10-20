@@ -1,4 +1,4 @@
-#learn not((A or B) and C)  with a nerual network with saving of the learned paramaters
+#learn (not(A or B)) and C  with a nerual network with saving of the learned paramaters
 
 import pybrain
 from pybrain.datasets import *
@@ -10,12 +10,12 @@ if __name__ == "__main__":
   ds = SupervisedDataSet(3, 1)
   ds.addSample( (1,1,1) , (0,))
   ds.addSample( (1,1,0) , (1,))
-  ds.addSample( (1,0,1) , (0,))
+  ds.addSample( (1,0,1) , (1,))
   ds.addSample( (0,1,1) , (0,))
-  ds.addSample( (1,0,0) , (1,))
-  ds.addSample( (0,1,0) , (1,))
+  ds.addSample( (1,0,0) , (0,))
+  ds.addSample( (0,1,0) , (0,))
   ds.addSample( (0,0,1) , (1,))
-  ds.addSample( (0,0,0) , (1,))
+  ds.addSample( (0,0,0) , (0,))
 
   net = buildNetwork(3, 4, 1, bias=True)
 
