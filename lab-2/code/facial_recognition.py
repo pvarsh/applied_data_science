@@ -19,39 +19,54 @@ def flatten(x):
         else:
             result.append(el)
     return result
+
+def print_f_list(flist, name = ""):
+    print "\n### ", name
+    for f, _ in flist:
+        print f.split('/')[-1] 
  
 if __name__ == "__main__":
     path_pos = "/Users/petervarshavsky/Documents/Git_NYU/applied_data_science/lab-2/images/faces/resized-not-centered/"
     path_neg = "/Users/petervarshavsky/Documents/Git_NYU/applied_data_science/lab-2/images/faces/not-my-face/"
     
     # making training set of positive images
-    files_pos = [f, -1 for f in glob.glob(path_pos + "pv*.png")]
+    files_pos = [(f, 2) for f in glob.glob(path_pos + "pv*.png")]
     random.shuffle(files_pos)
     splt = int(len(files_pos) * 2.0/3)
     files_pos_train = files_pos[:splt]
     files_pos_test = files_pos[splt:]
 
     # making training set of negative images
-    files_neg = [f, -1 for f in glob.glob(path_neg + "*.png")]
+    files_neg = [(f, 1) for f in glob.glob(path_neg + "*.png")]
     random.shuffle(files_neg)
     splt = int(len(files_neg) * 2.0/3)
     files_neg_train = files_neg[:splt]
     files_neg_test = files_neg[splt:]
-    
+   
+    print_f_list(files_neg_train, "files_neg_train")
+    print_f_list(files_neg_test, "files_neg_test")
+    print_f_list(files_neg, "files_neg")
+ 
     # putting together training and test sets
-    train = random.shuffle(files_pos_train + files_neg_train)
-    test = random.shuffle(files_pos_test + files_neg_test)
-
-    # first image to start the training set 
-    t, truth = loadImage(train[0])
+    train = files_pos_train + files_neg_train
+    test = files_pos_test + files_neg_test
+    random.shuffle(train)
+    random.shuffle(test)
+    
+    # first image to start the training set
+    f, truth = train.pop()
+    t = loadImage(f)
+    
     # build network
     net = buildNetwork(len(t), int(.03*len(t)), 1)
    
-    # initialize data set 
+    # initialize data set
     ds = SupervisedDataSet(len(t), truth)
     # add the rest of elements to data set
-    for img, truth in train[1:]:
+    for img, truth in train:
         ds.addSample(loadImage(img), truth)
+    
+    ds
 
     # train the network
     trainer = BackpropTrainer(net, ds)
@@ -63,7 +78,7 @@ if __name__ == "__main__":
         print "Iteration: {0} Error {1}".format(iteration, error)
     
     for img, truth in test:
-        print "Result (%d): %d" %(truth, net.activate(loadImage(img))
+        print "Result (%d): %d" %(truth, net.activate(loadImage(img)))
    # print "\nResult (N): ", net.activate(loadImage('pic/face_4copy.png'))
    # print "\nResult (Y): ", net.activate(loadImage('pic/image_9copy.png'))
    # print "\nResult (Y): ", net.activate(loadImage('pic/image_10copy.png'))
