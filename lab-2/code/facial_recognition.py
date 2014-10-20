@@ -26,11 +26,11 @@ def print_f_list(flist, name = ""):
         print f.split('/')[-1] 
  
 if __name__ == "__main__":
-    path_pos = "/Users/petervarshavsky/Documents/Git_NYU/applied_data_science/lab-2/images/faces/resized-not-centered/"
-    path_neg = "/Users/petervarshavsky/Documents/Git_NYU/applied_data_science/lab-2/images/faces/not-my-face/"
+    path_pos = "/Users/petervarshavsky/Documents/Git_NYU/applied_data_science/lab-2/images/faces/my-face/resized/"
+    path_neg = "/Users/petervarshavsky/Documents/Git_NYU/applied_data_science/lab-2/images/other_faces_resized/"
     
     # making training set of positive images
-    files_pos = [(f, 2) for f in glob.glob(path_pos + "pv*.png")]
+    files_pos = [(f, 2) for f in glob.glob(path_pos + "*.png")]
     random.shuffle(files_pos)
     splt = int(len(files_pos) * 2.0/3)
     files_pos_train = files_pos[:splt]
@@ -61,12 +61,12 @@ if __name__ == "__main__":
     net = buildNetwork(len(t), int(.03*len(t)), 1)
    
     # initialize data set
-    ds = SupervisedDataSet(len(t), truth)
+    ds = SupervisedDataSet(len(t), 1)
+    ds.addSample(t, truth)
     # add the rest of elements to data set
     for img, truth in train:
         ds.addSample(loadImage(img), truth)
     
-    ds
 
     # train the network
     trainer = BackpropTrainer(net, ds)
