@@ -1,0 +1,50 @@
+## Greg Dobler
+## CUSP Applied Data Science 2014
+## Example matplotlibrc file (which should be located in the .matplotlib/ 
+## folder in your home directory)
+
+
+# -------- set the display backend
+backend : MacOSX
+
+
+# -------- set the default color map to gray
+# -------- don't interpolate when displaying images
+image.cmap          : gist_gray
+image.interpolation : nearest # set image display interpolation
+
+
+# -------- rectangular figures by default
+# -------- white canvas background
+# -------- set the location of axes on the canvas
+figure.figsize        : 10,5
+figure.facecolor      : w
+figure.subplot.bottom : 0.125
+figure.subplot.left   : 0.1
+
+
+# -------- set default color cycle for plotting lines
+# -------- turn on the grid by default
+# -------- set the axis background color to gray
+# -------- put axis lines (e.g., grid lines) behind plotted lines
+# -------- turn off bounding axis lines
+axes.color_cycle : E24A33, 8EBA42, 348ABD, 988ED5, 777777, FBC15E, FFB5B8
+axes.grid        : True
+axes.facecolor   : EEEEEE
+axes.axisbelow   : True
+axes.linewidth   : 0
+
+
+# -------- make grid white dashed lines with thickness 1.5
+grid.color : white
+grid.linewidth : 1.5
+grid.linestyle : -
+
+
+# -------- point the ticks outwards
+xtick.direction : out
+ytick.direction : out
+
+
+# -------- make the default line width when plotting twice as thick
+lines.linewidth : 2
