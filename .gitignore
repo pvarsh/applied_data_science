@@ -7,4 +7,4 @@ day.csv
 hour.csv
 *checkpoint.ipynb
 *.wav
-video_lectures_project/images/*.jpg
+video_lectures_project/images/*
