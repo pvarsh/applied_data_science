@@ -35,7 +35,7 @@ fig1.canvas.draw()
 
 ### Plot histograms
 fig2, ax2 = plt.subplots(num = 2, nrows = 3, ncols = 1)
-#fig2.subplots_adjust(0,0,1,1)
+fig2.subplots_adjust(0,0,1,1)
 
 for i in range(3):
     ax2[i].set_xlim((0,255))
