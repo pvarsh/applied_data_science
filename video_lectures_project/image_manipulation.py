@@ -1,6 +1,9 @@
-####### Applied Urban Science 2014 Image/video module final
-# Peter Varshavsky
-#######
+
+# coding: utf-8
+
+# ### Final project for image analysis module
+
+# In[1]:
 
 import os
 import sys
@@ -9,18 +12,36 @@ import matplotlib.pyplot as plt
 import scipy.ndimage as nd
 from scipy.ndimage.filters import median_filter as mf
 
-### Problem 1
 
-img = nd.imread('images/ml.jpg')
+####### Problem 1
+
+# In[2]:
+
+img = mf((255 - nd.imread('images/ml.jpg')[::1,::2,::-1]).astype(float), (8, 2, 1)).clip(0,255).astype(np.uint8)
+### Explanation:
+### 1. nd.imread reaturns a 3D array
+### 2. Then subsetting [::2, ::1, ::-1] inverses colors and skips every other column
+### 3. 255 - ... converts to negative
+### 4. .astype(float)
+### 5. mf() applies median filter
+### 6. .clip() clips
+### 7. .astype(np.uint8) converts to uint
 
 nrow, ncol = img.shape[:2]
 
-xsize = 6.
-ysize = xsize * float(nrow) / float(ncol)
+ysize = 10.
+xsize = ysize * float(ncol)/float(nrow)
 
-fig0, ax0 = plt.subplots(num = 0, figsize = [xsize, ysize])
-fig0.subplots_adjust(0, 0, 1, 1)
-ax0.axis('off')
-im0 = ax0.imshow(img)
-fig0.canvas.draw()
+fig1, ax1 = plt.subplots(num = 1, figsize = [xsize, ysize])
+fig1.canvas.set_window_title('modiefied Mona Lisa')
+fig1.subplots_adjust(0, 0, 1, 1)
+ax1.axis('off')
+im1 = ax1.imshow(img)
+fig1.canvas.draw()
 plt.show()
+
+
+# In[ ]:
+
+
+

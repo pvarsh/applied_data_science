@@ -89,58 +89,21 @@ histograms(img, fig2, ax2)
 
 # In[5]:
 # Get rectangles from image and update histograms
-#rflag = True
-#while rflag:
-#    try:
-#        upperLeft, lowerRight = [(int(round(i)), int(round(j))) for i, j in fig1.ginput(2, show_clicks = True)]
-#        x = [upperLeft[0], lowerRight[0]]
-#        y = [upperLeft[1], lowerRight[1]]
-#        if x[0] == x[1] and y[0] == y[1]:
-#            histograms(img, fig2, ax2)
-#            for line in lines:
-#                line.set_visible(False)
-#        else:
-#            setLineData(lines, upperLeft, lowerRight)
-#            for line in lines:
-#                line.set_visible(True)
-#            histograms(img[upperLeft[1]:lowerRight[1], upperLeft[0]:lowerRight[0], :], fig2, ax2)
-#        fig1.canvas.draw()
-#    except:
-#        rflag = False
-
-
-# In[6]:
-# Get values from histograms and update image
-selectBands = []
-tolerance = 5
-
 rflag = True
 while rflag:
-    if len(selectBands) > 0:
-        ### set existing bands to invisible (if any exist)
-        ### this may be very inefficient if the invisible bands remain somewhere in figure or axis object and take up resources
-        ### but it gets things done for the scope of the assignment
-        [band.set_visible(False) for band in selectBands] # this may be inefficient since it doesn't remove old rectangles
-    
-    rgbPick = [(int(round(i))) for i, j in fig2.ginput(3, show_clicks = True)]
-    if len(rgbPick) != 3: #break the loop if user pressed Escape
-        break
-        
-    # create verical bands around selected values
-    selectBands = [ax2[i].axvspan(rgbPick[i]-tolerance, rgbPick[i]+tolerance, facecolor = 'black', alpha = 0.4)                   for i in range(len(rgbPick))]
-    fig2.canvas.draw()
-    
-    # create (or update) mask
-    mask = np.ones(img.shape, dtype=np.float64)
-    print "shape mask", mask.shape
-    #index = (img[:,:,0] < rgbPick[0]-tolerance) or (img[:,:,0] > rgbPick[0]+tolerance)
-    index = ((img[:,:,0] < (rgbPick[0]-tolerance)) | (img[:,:,0] > (rgbPick[0]+tolerance))) &\
-            ((img[:,:,1] < (rgbPick[1]-tolerance)) | (img[:,:,1] > (rgbPick[1]+tolerance))) &\
-            ((img[:,:,2] < (rgbPick[2]-tolerance)) | (img[:,:,2] > (rgbPick[2]+tolerance)))
-    mask[index] = 0.25
-    print "mask[index]141", mask.shape
-    ax1.imshow((img*mask).clip(0,255).astype(np.uint8))
-    fig1.canvas.draw()
-        
-    
-    
+    try:
+        upperLeft, lowerRight = [(int(round(i)), int(round(j))) for i, j in fig1.ginput(2, show_clicks = True)]
+        x = [upperLeft[0], lowerRight[0]]
+        y = [upperLeft[1], lowerRight[1]]
+        if x[0] == x[1] and y[0] == y[1]:
+            histograms(img, fig2, ax2)
+            for line in lines:
+                line.set_visible(False)
+        else:
+            setLineData(lines, upperLeft, lowerRight)
+            for line in lines:
+                line.set_visible(True)
+            histograms(img[upperLeft[1]:lowerRight[1], upperLeft[0]:lowerRight[0], :], fig2, ax2)
+        fig1.canvas.draw()
+    except:
+        rflag = False

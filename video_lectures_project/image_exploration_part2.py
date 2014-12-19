@@ -79,6 +79,7 @@ fig1.canvas.set_window_title('Mona Lisa')
 ax1.imshow(img)
 ax1.axis('off')
 fig1.canvas.draw()
+fig1.show()
     
 
 ### Plot histograms
